@@ -10,7 +10,7 @@ const newCarMock:ICar = {
   seatsQty: 5
 };
 
-const newCarResultMock:ICar & { _id: string } = {
+const CarWithIdMock:ICar & { _id: string } = {
   model: "Fiesta",
   year: 2017,
   color: "preto",
@@ -42,9 +42,20 @@ const CarForUpdateMock:ICar = {
   seatsQty: 5,
 };
 
+const carUpdateWrongMock = {
+  model: "Fiesta",
+  year: 2077,
+  color: "cinza escuro",
+  status: true,
+  buyValue: 14500,
+  doorsQty: 4,
+  seatsQty: 5,
+};
+
 export {
   newCarMock,
-  newCarResultMock,
+  CarWithIdMock,
   CarUpdatedResultMock,
   CarForUpdateMock,
+  carUpdateWrongMock
 }

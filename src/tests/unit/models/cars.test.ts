@@ -1,20 +1,20 @@
 import * as sinon from 'sinon';
 import chai from 'chai';
 import CarModel from '../../../models/CarsModel';
-import { CarUpdatedResultMock, CarForUpdateMock, newCarMock, newCarResultMock } from '../../mocks/carsMocks';
+import { CarUpdatedResultMock, CarForUpdateMock, newCarMock, CarWithIdMock } from '../../mocks/carsMocks';
 import { Model } from 'mongoose';
 import { ErrorTypes } from '../../../errors/catalogs';
 const { expect } = chai;
 
-describe('/cars', () => {
+describe('Cars Model', () => {
   const carModel = new CarModel();
 
   before(() => {
-    sinon.stub(Model, 'create').resolves(newCarResultMock);
-    sinon.stub(Model, 'find').resolves([newCarResultMock]);
-    sinon.stub(Model, 'findOne').resolves(newCarResultMock);
+    sinon.stub(Model, 'create').resolves(CarWithIdMock);
+    sinon.stub(Model, 'find').resolves([CarWithIdMock]);
+    sinon.stub(Model, 'findOne').resolves(CarWithIdMock);
     sinon.stub(Model, 'findByIdAndUpdate').resolves(CarUpdatedResultMock);
-    sinon.stub(Model, 'findByIdAndDelete').resolves(newCarResultMock);
+    sinon.stub(Model, 'findByIdAndDelete').resolves(CarWithIdMock);
   });
 
   after(() => {
@@ -24,21 +24,21 @@ describe('/cars', () => {
   describe('POST, creating a new car', () => {
     it('Sucessfully created',  async () => {
         const newCar = await carModel.create(newCarMock);
-        expect(newCar).to.be.deep.equal(newCarResultMock);
+        expect(newCar).to.be.deep.equal(CarWithIdMock);
     });
   });
 
   describe('GET, searching cars', () => {
     it('Sucessfully searched',  async () => {
         const cars = await carModel.read();
-        expect(cars).to.be.deep.equal([newCarResultMock]);
+        expect(cars).to.be.deep.equal([CarWithIdMock]);
     });
   });
 
   describe('GET/:id, searching a car', () => {
     it('Sucessfully searched',  async () => {
         const car = await carModel.readOne("635692044cdb342282555065");
-        expect(car).to.be.deep.equal(newCarResultMock);
+        expect(car).to.be.deep.equal(CarWithIdMock);
     });
     it('not found', async () => {
       try {
@@ -67,7 +67,7 @@ describe('/cars', () => {
   describe('DELETE, deleting a car', () => {
     it ('Sucessfully deleted', async () => {
       const carDeleted = await carModel.delete("635692044cdb342282555065");
-      expect(carDeleted).to.be.deep.equal(newCarResultMock);
+      expect(carDeleted).to.be.deep.equal(CarWithIdMock);
     });
 
     it ('update failure', async () => {
